@@ -91,6 +91,9 @@ jobs:
       - name: Wait for App to start
         run: sleep 10
 
+      - name: Fix permissions for ZAP container
+        run: chmod -R 777 .
+
       - name: ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.12.0
         with:
