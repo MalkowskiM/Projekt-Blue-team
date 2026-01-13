@@ -40,6 +40,32 @@ jobs:
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
 
+      - name: Run Trivy (Generate SARIF)
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          vuln-type: 'library'
+          trivyignores: '.github/config/.trivyignore'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          exit-code: '0'
+
+      - name: Upload Trivy scan results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Run Trivy (Console Output & Block)
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          vuln-type: 'library'
+          trivyignores: '.github/config/.trivyignore'
+          format: 'table'
+          exit-code: '1'
+
   SAST:
     name: SAST (Semgrep)
     runs-on: ubuntu-latest
@@ -51,7 +77,13 @@ jobs:
         run: pip install semgrep
 
       - name: Run Semgrep SAST
-        run: semgrep --config p/security-audit --error --json .
+        run: semgrep scan --config auto --error --output scan_results.sarif --sarif
+
+      - name: Upload Semgrep results to GitHub Security
+        if: success() || failure()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'scan_results.sarif'
 
   DAST_ZAP:
     name: DAST (OWASP ZAP)
