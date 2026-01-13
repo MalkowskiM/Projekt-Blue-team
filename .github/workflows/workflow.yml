@@ -29,17 +29,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run Trivy scan on source code (SCA)
-        uses: aquasecurity/trivy-action@0.33.1
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          vuln-type: 'library'
-          trivyignores: '.github/config/.trivyignore'
-          format: 'table'
-          exit-code: '1'
-          severity: 'CRITICAL,HIGH'
-
       - name: Run Trivy (Generate SARIF)
         uses: aquasecurity/trivy-action@0.33.1
         with:
