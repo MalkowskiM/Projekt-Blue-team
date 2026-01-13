@@ -33,6 +33,7 @@ jobs:
           scan-type: 'fs'
           scan-ref: '.'
           vuln-type: 'library'
+          trivyignores: '.github/config/.trivyignore'
           format: 'table'
           exit-code: '1'
           severity: 'CRITICAL,HIGH'

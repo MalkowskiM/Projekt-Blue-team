@@ -1,0 +1,7 @@
+# Unfixable Spring Boot 2.x EOL vulnerabilities
+# Required migration to Spring Boot 3.x which is out of scope
+CVE-2025-22235
+CVE-2025-41249
+CVE-2016-1000027
+CVE-2024-38816
+CVE-2024-38819
