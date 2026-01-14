@@ -130,6 +130,8 @@ jobs:
 
       - name: Tag and push Docker image to GHCR
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository }}/app
-          docker tag debug $IMAGE_NAME:${{ env.TAG }}
+          REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          IMAGE_NAME=ghcr.io/$REPO_LOWER/app
+          echo "Pushing to: $IMAGE_NAME:${{ env.TAG }}"          
+          docker tag myapp:latest $IMAGE_NAME:${{ env.TAG }}
           docker push $IMAGE_NAME:${{ env.TAG }}
