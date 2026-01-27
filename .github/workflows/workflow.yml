@@ -69,7 +69,7 @@ jobs:
         run: pip install semgrep
 
       - name: Run Semgrep SAST
-        run: semgrep scan --config auto --output scan_results.sarif --sarif
+        run: semgrep scan --config auto --error --output scan_results.sarif --sarif
 
       - name: Upload Semgrep results to GitHub Security
         if: success() || failure()
@@ -101,8 +101,8 @@ jobs:
         uses: zaproxy/action-baseline@v0.15.0
         with:
           target: 'http://localhost:8080'
-          fail_action: false
-          allow_issue_writing: false
+          fail_action: true
+          allow_issue_writing: true
 
   build_image:
     name: Build Docker Image
@@ -130,6 +130,8 @@ jobs:
 
       - name: Tag and push Docker image to GHCR
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository }}/app
-          docker tag debug $IMAGE_NAME:${{ env.TAG }}
+          REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          IMAGE_NAME=ghcr.io/$REPO_LOWER/app
+          echo "Pushing to: $IMAGE_NAME:${{ env.TAG }}"          
+          docker tag myapp:latest $IMAGE_NAME:${{ env.TAG }}
           docker push $IMAGE_NAME:${{ env.TAG }}
