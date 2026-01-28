@@ -1,0 +1,2 @@
+# ignoring vulnerabilities that are out of project scope
+src/main/resources/static/vendors/
