@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run Unit Tests
-        run: echo "UT placeholder"
+        run: mvn test
 
   SCA:
     name: SCA (Trivy)
