@@ -15,8 +15,10 @@ RUN mvn clean install -DskipTests
 # ---- Deploy Stage ----
 FROM openjdk:26-ea-11-jdk-slim
 
-# Copy the built JAR from the build stage
-COPY --from=build /app/target/thymeleaf-0.0.1-SNAPSHOT.jar /app.jar
 
+RUN groupadd -r spring && useradd -r -g spring spring
+
+COPY --from=build --chown=spring:spring /app/target/thymeleaf-0.0.1-SNAPSHOT.jar /app.jar
+USER spring
 # Run the application
 ENTRYPOINT ["java", "-jar", "/app.jar"]
