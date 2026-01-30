@@ -69,5 +69,9 @@ Metoda `pingHost` przekazuje nieoczyszczone dane wejściowe bezpośrednio do pow
 
 Zgodnie z załączonym zrzutem ekranu, **Pipeline poprawnie przerwał budowanie obrazu**. Kod nie trafił do rejestru, co dowodzi, że system automatycznie chroni środowisko przed wdrożeniem krytycznych podatności.
 <img width="1051" height="632" alt="Image" src="https://github.com/user-attachments/assets/e43bac29-9845-47c0-a875-99a593a7c85c" />
+
+Dodatkowo, w wyniku działania procesu CI/CD do Pull requesta dopisywane są komentarze, które wskazują miejsca zawierające podatności. Można je zobaczyć [tutaj](https://github.com/MalkowskiM/Projekt-Blue-team/pull/6).
+
+
 ## Credits
 * Java application - [GitHub Repo](https://github.com/pedrohenriquelacombe/spring-thymeleaf-crud-example)
